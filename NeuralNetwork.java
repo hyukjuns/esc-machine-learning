@@ -1,4 +1,4 @@
-// 매트랩의  nprtool에서 가중치 파일로 만든후 프로젝트에 넣어서 정확도 
+// 매트랩의  nprtool에서 가중치 파일로 만든후 프로젝트에 넣어서 정확도 측정가능
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
