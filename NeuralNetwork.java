@@ -1,3 +1,4 @@
+// ë§¤íŠ¸ë©ì˜  nprtoolì—ì„œ ê°€ì¤‘ì¹˜ íŒŒì¼ë¡œ ë§Œë“ í›„ í”„ë¡œì íŠ¸ì— ë„£ì–´ì„œ ì •í™•ë„ 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,11 +26,11 @@ public class NeuralNetwork {
 	int i,j;
 	int cnt1=0;
 	int cnt2=0;
-	File whFile = new File("wh.txt");//È÷µçÃş °¡ÁßÄ¡
-	File woFile = new File("wo.txt");//Ãâ·ÂÃş °¡ÁßÄ¡
-	File b1File = new File("hbias.txt");//È÷µçÃæ ÀÓ°èÄ¡
-	File b2File = new File("obias.txt");//Ãâ·ÂÃş °¡ÁßÄ¡
-	File dataFile = new File("ha_nam1.txt");//µ¥ÀÌÅÍÆÄÀÏ
+	File whFile = new File("wh.txt");//íˆë“ ì¸µ ê°€ì¤‘ì¹˜
+	File woFile = new File("wo.txt");//ì¶œë ¥ì¸µ ê°€ì¤‘ì¹˜
+	File b1File = new File("hbias.txt");//íˆë“ ì¶© ì„ê³„ì¹˜
+	File b2File = new File("obias.txt");//ì¶œë ¥ì¸µ ê°€ì¤‘ì¹˜
+	File dataFile = new File("ha_nam1.txt");//ë°ì´í„°íŒŒì¼
 	File xoffsetFile = new File("xoffset.txt");
 	File gainFile = new File("gain.txt");
 	
@@ -60,7 +61,7 @@ public class NeuralNetwork {
 	}
 	System.out.println("cnt1: "+cnt1+" cnt2: "+cnt2);
 	double ac = ((double)cnt1+(double)cnt2)/1400.0*100.0;
-	System.out.print("Á¤È®µµ: ");
+	System.out.print("ì •í™•ë„: ");
 	System.out.printf("%.2f",ac);
 	System.out.println("%");
 	}
@@ -69,7 +70,7 @@ public class NeuralNetwork {
 	public static void forward(double[][] wh,double[][] wo, double[] hi, double[] data,double[] bias1,double[] bias2,double[] o)
 	{
 		int i,j;
-		double u,u1; //°¡ÁßÇÕ
+		double u,u1; //ê°€ì¤‘í•©
 		for(i=0; i<hiddennum;i++)
 		{	u=0;
 			for(j=0; j<inputnum;j++)
@@ -77,13 +78,13 @@ public class NeuralNetwork {
 				u += data[j]*wh[i][j];
 			}
 			u += bias1[i];
-			hi[i] = sig(u); //Áß°£Ãş sigmoid»ç¿ë
+			hi[i] = sig(u); //ì¤‘ê°„ì¸µ sigmoidì‚¬ìš©
 		}
 		for(i=0; i<outputnum;i++) 
 		{	u1=0;
 			for(j=0; j<hiddennum; j++)
 			{
-				u1 += hi[j]*wo[i][j];//°¡ÁßÄ¡Ã³¸®
+				u1 += hi[j]*wo[i][j];//ê°€ì¤‘ì¹˜ì²˜ë¦¬
 			}
 			u1 += bias2[i];
 			o[i] = sig(u1);
@@ -114,8 +115,8 @@ public class NeuralNetwork {
 
 	public static int getData(File dataFile, File xoffsetFile, File gainFile, double[][] data, double[] xoffset, double[] gain) throws FileNotFoundException
 	{
-		FileReader f = new FileReader(dataFile); //°¡ÁßÄ¡ 
-		Scanner sc = new Scanner(f); //½ºÄ³³ÊÅ¬·¡½º·Î ÆÄÀÏ·ÎºÎÅÍ doubleÀÔ·Â¹ŞÀ½
+		FileReader f = new FileReader(dataFile); //ê°€ì¤‘ì¹˜ 
+		Scanner sc = new Scanner(f); //ìŠ¤ìºë„ˆí´ë˜ìŠ¤ë¡œ íŒŒì¼ë¡œë¶€í„° doubleì…ë ¥ë°›ìŒ
 		FileReader f3 = new FileReader(xoffsetFile);
 		Scanner sc3 = new Scanner(f3);
 		FileReader f4 = new FileReader(gainFile);
@@ -155,13 +156,13 @@ public class NeuralNetwork {
 	
 	
 	
-	/*Áß°£Ãş °¡ÁßÄ¡ ¹× ÀÓ°èÄ¡ ÃÊ±âÈ­*/
+	/*ì¤‘ê°„ì¸µ ê°€ì¤‘ì¹˜ ë° ì„ê³„ì¹˜ ì´ˆê¸°í™”*/
 	public static void initwh(File file1,File file2, double[][] wh,double[] bias1) throws FileNotFoundException {
 	int i,j;
-	FileReader f = new FileReader(file1); //°¡ÁßÄ¡ 
-	Scanner sc = new Scanner(f); //½ºÄ³³ÊÅ¬·¡½º·Î ÆÄÀÏ·ÎºÎÅÍ doubleÀÔ·Â¹ŞÀ½
-	FileReader f2 = new FileReader(file2); //ÀÓ°èÄ¡
-	Scanner sc2 = new Scanner(f2); //½ºÄ³³ÊÅ¬·¡½º·Î ÆÄÀÏ·ÎºÎÅÍ doubleÀÔ·Â¹ŞÀ½
+	FileReader f = new FileReader(file1); //ê°€ì¤‘ì¹˜ 
+	Scanner sc = new Scanner(f); //ìŠ¤ìºë„ˆí´ë˜ìŠ¤ë¡œ íŒŒì¼ë¡œë¶€í„° doubleì…ë ¥ë°›ìŒ
+	FileReader f2 = new FileReader(file2); //ì„ê³„ì¹˜
+	Scanner sc2 = new Scanner(f2); //ìŠ¤ìºë„ˆí´ë˜ìŠ¤ë¡œ íŒŒì¼ë¡œë¶€í„° doubleì…ë ¥ë°›ìŒ
 	for(i=0; i<hiddennum; i++) { 
 		for(j=0; j<inputnum;j++) {
 			wh[i][j] = sc.nextDouble();
@@ -173,14 +174,14 @@ public class NeuralNetwork {
 	sc.close();
 	sc2.close();
 	}
-	/*Ãâ·ÂÃş °¡ÁßÄ¡ ¹× ÀÓ°èÄ¡ ÃÊ±âÈ­*/
+	/*ì¶œë ¥ì¸µ ê°€ì¤‘ì¹˜ ë° ì„ê³„ì¹˜ ì´ˆê¸°í™”*/
 	public static void initwo(File file1, File file2, double[][] wo,double[] bias2) throws FileNotFoundException
 	{
 		int i,j;
-		FileReader f = new FileReader(file1); //°¡ÁßÄ¡ 
-		Scanner sc = new Scanner(f); //½ºÄ³³ÊÅ¬·¡½º·Î ÆÄÀÏ·ÎºÎÅÍ doubleÀÔ·Â¹ŞÀ½
-		FileReader f2 = new FileReader(file2); //ÀÓ°èÄ¡
-		Scanner sc2 = new Scanner(f2); //½ºÄ³³ÊÅ¬·¡½º·Î ÆÄÀÏ·ÎºÎÅÍ doubleÀÔ·Â¹ŞÀ½
+		FileReader f = new FileReader(file1); //ê°€ì¤‘ì¹˜ 
+		Scanner sc = new Scanner(f); //ìŠ¤ìºë„ˆí´ë˜ìŠ¤ë¡œ íŒŒì¼ë¡œë¶€í„° doubleì…ë ¥ë°›ìŒ
+		FileReader f2 = new FileReader(file2); //ì„ê³„ì¹˜
+		Scanner sc2 = new Scanner(f2); //ìŠ¤ìºë„ˆí´ë˜ìŠ¤ë¡œ íŒŒì¼ë¡œë¶€í„° doubleì…ë ¥ë°›ìŒ
 		
 		for(i=0;i<outputnum;i++)
 		{
