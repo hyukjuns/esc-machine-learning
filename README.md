@@ -1,4 +1,4 @@
-# machine-learnig
+# machine-learning
 
 # using c language
 
