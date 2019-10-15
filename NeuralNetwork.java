@@ -113,7 +113,8 @@ public class NeuralNetwork {
 	}
 
 
-	public static int getData(File dataFile, File xoffsetFile, File gainFile, double[][] data, double[] xoffset, double[] gain) throws FileNotFoundException
+	public static int getData(File dataFile, File xoffsetFile, File gainFile, double[][] data, 
+				  double[] xoffset, double[] gain) throws FileNotFoundException
 	{
 		FileReader f = new FileReader(dataFile); //가중치 
 		Scanner sc = new Scanner(f); //스캐너클래스로 파일로부터 double입력받음
