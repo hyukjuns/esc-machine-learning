@@ -1,5 +1,5 @@
 # machine-learning
 
-# using c language
+# KNN Algorithm
 
-# using java language
+# K-Means Algorithm
