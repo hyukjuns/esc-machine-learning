@@ -1,6 +1,3 @@
 # machine-learning
+KNN is using Iris data set
 
-# KNN Algorithm
-
-# K-Means Algorithm
-test word
