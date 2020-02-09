@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 		}
 		qsort(dist, REF_SIZE, sizeof(Dist), comp);
 		int cnt1 = 0, cnt2 = 0, cnt3 = 0, cnt4 = 0, cnt5 = 0;
-		for (h = 0; h<k; h++) //Á¤·ÄµÈ°Å¸®¿¡¼­ °¡Àå°¡±î¿î k°³¸¸Å­ »ÌÀºÈÄ Å¬·¡½ºÁ¤º¸ºñ±³ 
+		for (h = 0; h<k; h++) //ì •ë ¬ëœê±°ë¦¬ì—ì„œ ê°€ìž¥ê°€ê¹Œìš´ kê°œë§Œí¼ ë½‘ì€í›„ í´ëž˜ìŠ¤ì •ë³´ë¹„êµ 
 		{
 			if (dist[h].lableInfo == 1)
 				cnt1++;
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	end = clock();
-	printf("°É¸°½Ã°£ %f s", (double)(end - start)/CLOCKS_PER_SEC);;
+	printf("ê±¸ë¦°ì‹œê°„ %f s", (double)(end - start)/CLOCKS_PER_SEC);;
 	_aligned_free(test);
 	_aligned_free(ref);
 	free(dist);
