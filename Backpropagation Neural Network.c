@@ -1,5 +1,5 @@
-/*¿ªÀüÆÄ ÄÚµå
-cmdÃ¢¿¡ ÇÁ·Î±×·¥¸í ÆÄÀÏ¸í °á°úÈ®ÀÎ¿ëÆÄÀÏ¸í*/
+/*ì—­ì „íŒŒ ì½”ë“œ
+cmdì°½ì— í”„ë¡œê·¸ëž¨ëª… íŒŒì¼ëª… ê²°ê³¼í™•ì¸ìš©íŒŒì¼ëª…*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,13 +13,13 @@ cmdÃ¢¿¡ ÇÁ·Î±×·¥¸í ÆÄÀÏ¸í °á°úÈ®ÀÎ¿ëÆÄÀÏ¸í*/
 #define BIGNUM	100
 #define LIMIT	0.01
 
-double s(double u); //½Ã±×¸ðÀÌµåÇÔ¼ö
-void initwh(double wh[HIDDENNO][INPUTNO + 1]);// Áß°£Ãþ °¡ÁßÄ¡ ÃÊ±âÈ­
-void initwo(double wo[HIDDENNO + 1]);// Ãâ·ÂÃþ °¡ÁßÄ¡ ÃÊ±âÈ­
-double drnd(void);//³­¼ö»ý¼º
-void print(double wh[HIDDENNO][INPUTNO + 1], double wo1[HIDDENNO + 1], double wo2[HIDDENNO + 1], double wo3[HIDDENNO + 1]);//°á°úÃâ·Â
-double forward(double wh[HIDDENNO][INPUTNO], double wo[HIDDENNO + 1], double hi[], double e[INPUTNO + 1]);//¼ø¹æÇâ °è»ê
-void olearn(double wo[HIDDENNO + 1], double hi[], double e[INPUTNO + 1], double o, int output); //Ãâ·ÂÃþ °¡ÁßÄ¡ Á¶Á¤
+double s(double u); //ì‹œê·¸ëª¨ì´ë“œí•¨ìˆ˜
+void initwh(double wh[HIDDENNO][INPUTNO + 1]);// ì¤‘ê°„ì¸µ ê°€ì¤‘ì¹˜ ì´ˆê¸°í™”
+void initwo(double wo[HIDDENNO + 1]);// ì¶œë ¥ì¸µ ê°€ì¤‘ì¹˜ ì´ˆê¸°í™”
+double drnd(void);//ë‚œìˆ˜ìƒì„±
+void print(double wh[HIDDENNO][INPUTNO + 1], double wo1[HIDDENNO + 1], double wo2[HIDDENNO + 1], double wo3[HIDDENNO + 1]);//ê²°ê³¼ì¶œë ¥
+double forward(double wh[HIDDENNO][INPUTNO], double wo[HIDDENNO + 1], double hi[], double e[INPUTNO + 1]);//ìˆœë°©í–¥ ê³„ì‚°
+void olearn(double wo[HIDDENNO + 1], double hi[], double e[INPUTNO + 1], double o, int output); //ì¶œë ¥ì¸µ ê°€ì¤‘ì¹˜ ì¡°ì •
 int getdata(char *argv[], double e[][INPUTNO + 3]);
 void hlearn(double wh[HIDDENNO][INPUTNO + 1], double wo[HIDDENNO + 1], double hi[], double e[INPUTNO + 1], double o, int output);
 
@@ -43,56 +43,56 @@ int main(int argc, char *argv[])
 	FILE *fp = fopen(argv[2], "w");
 
 
-	/*³­¼öÃÊ±âÈ­*/
+	/*ë‚œìˆ˜ì´ˆê¸°í™”*/
 	srand(SEED);
 
-	/*°¡ÁßÄ¡ÃÊ±âÈ­*/
+	/*ê°€ì¤‘ì¹˜ì´ˆê¸°í™”*/
 	initwh(wh);
 	initwo(wo1);
 	initwo(wo2);
 	initwo(wo3);
 	print(wh, wo1, wo2, wo3);
 
-	/*ÇÐ½À µ¥ÀÌÅÍ ÀÐ±â*/
+	/*í•™ìŠµ ë°ì´í„° ì½ê¸°*/
 	n_of_e = getdata(argv,e);
-	printf("ÇÐ½À µ¥ÀÌÅÍ °³¼ö:%d\n", n_of_e);
+	printf("í•™ìŠµ ë°ì´í„° ê°œìˆ˜:%d\n", n_of_e);
 
-	/*ÇÐ½À*/
+	/*í•™ìŠµ*/
 	while (err1 > LIMIT || err2 > LIMIT || err3 > LIMIT)
 	{
 		err1 = 0.0, err2 = 0.0, err3 = 0.0;
 		for (j = 0; j < n_of_e; ++j) {
-			/*¼ø¹æÇâ°è»ê*/
+			/*ìˆœë°©í–¥ê³„ì‚°*/
 			o1 = forward(wh, wo1, hi, e[j]);
 			o2 = forward(wh, wo2, hi, e[j]);
 			o3 = forward(wh, wo3, hi, e[j]);
-			/*Ãâ·ÂÃþ °¡ÁßÄ¡ Á¶Á¤*/
+			/*ì¶œë ¥ì¸µ ê°€ì¤‘ì¹˜ ì¡°ì •*/
 			olearn(wo1, hi, e[j], o1, output1);
 			olearn(wo2, hi, e[j], o2, output2);
 			olearn(wo3, hi, e[j], o3, output3);
-			/*Áß°£Ãþ °¡ÁßÄ¡ Á¶Á¤*/
+			/*ì¤‘ê°„ì¸µ ê°€ì¤‘ì¹˜ ì¡°ì •*/
 			hlearn(wh, wo1, hi, e[j], o1, output1);
 			hlearn(wh, wo2, hi, e[j], o2, output2);
 			hlearn(wh, wo3, hi, e[j], o3, output3);
-			/*¿ÀÂ÷ Àû»ê*/
+			/*ì˜¤ì°¨ ì ì‚°*/
 			err1 += (o1 - e[j][INPUTNO+output1])*(o1 - e[j][INPUTNO+output1]);
 			err2 += (o2 - e[j][INPUTNO+output2])*(o2 - e[j][INPUTNO+output2]);
 			err3 += (o3 - e[j][INPUTNO+output3])*(o3 - e[j][INPUTNO+output3]);
 		}
 		++count;
-		/*¿ÀÂ÷Ãâ·Â*/
+		/*ì˜¤ì°¨ì¶œë ¥*/
 		printf("%d\t%lf", count, err1);
 		printf("%d\t%lf", count, err2);
 		printf("%d\t%lf", count, err3);
-	}/*ÇÐ½À Á¾·á*/
+	}/*í•™ìŠµ ì¢…ë£Œ*/
 
-	 /*¿¬°á°­µµ Ãâ·Â*/
+	 /*ì—°ê²°ê°•ë„ ì¶œë ¥*/
 	print(wh, wo1,wo2,wo3);
-	/*ÇÐ½À µ¥ÀÌÅÍ ¿¹*/
+	/*í•™ìŠµ ë°ì´í„° ì˜ˆ*/
 	for (i = 0; i<n_of_e; ++i) {
-		fprintf(fp, "ÇÐ½Àµ¥ÀÌÅÍ¼ø¼­ = %d \n", i);
+		fprintf(fp, "í•™ìŠµë°ì´í„°ìˆœì„œ = %d \n", i);
 		for (j = 0; j < INPUTNO + 3; ++j)
-			fprintf(fp, " µ¥ÀÌÅÍ = %lf, ", e[i][j]);
+			fprintf(fp, " ë°ì´í„° = %lf, ", e[i][j]);
 		o1 = forward(wh, wo1, hi, e[i]);
 		o2 = forward(wh, wo2, hi, e[i]);
 		o3 = forward(wh, wo3, hi, e[i]);
@@ -102,35 +102,35 @@ int main(int argc, char *argv[])
 			cnt++;
 		if (o3 <= 1 && o3 >= 0.9 && o1 < 0.1 && o2 < 0.1)
 			cnt++;
-		fprintf(fp, "Ãâ·Â1 %lf\n", o1);
-		fprintf(fp, "Ãâ·Â2 %lf\n", o2);
-		fprintf(fp, "Ãâ·Â3 %lf\n", o3);
+		fprintf(fp, "ì¶œë ¥1 %lf\n", o1);
+		fprintf(fp, "ì¶œë ¥2 %lf\n", o2);
+		fprintf(fp, "ì¶œë ¥3 %lf\n", o3);
 	}
 	fclose(fp);
-	printf("Á¤È®µµ : %f", ((double)cnt / 75)*100.0);
+	printf("ì •í™•ë„ : %f", ((double)cnt / 75)*100.0);
 	return 0;
 }
-/*hlearn() ÇÔ¼ö
-Áß°£Ãþ °¡ÁßÄ¡ ÇÐ½À*/
+/*hlearn() í•¨ìˆ˜
+ì¤‘ê°„ì¸µ ê°€ì¤‘ì¹˜ í•™ìŠµ*/
 
 void hlearn(double wh[HIDDENNO][INPUTNO + 1], double wo[HIDDENNO + 1], double hi[], double e[INPUTNO + 1], double o, int output)
 {
 	int i, j;
 	double dj;
 
-		for (j = 0; j < HIDDENNO; ++j) { /*Áß°£Ãþ °¢ ¼¿ j¸¦ ´ë»ó*/
+		for (j = 0; j < HIDDENNO; ++j) { /*ì¤‘ê°„ì¸µ ê° ì…€ jë¥¼ ëŒ€ìƒ*/
 			dj = hi[j] * (1 - hi[j])*wo[j] * (e[INPUTNO+output] - o)*o*(1 - o);
-		for (i = 0; i < INPUTNO; i++)/*i¹øÂ° °¡ÁßÄ¡ Ã³¸®*/
+		for (i = 0; i < INPUTNO; i++)/*ië²ˆì§¸ ê°€ì¤‘ì¹˜ ì²˜ë¦¬*/
 			wh[j][i] += ALPHA*e[i] * dj;
-		wh[j][i] += ALPHA*(-1)*dj;/*ÀÓ°èÄ¡ ÇÐ½À*/
+		wh[j][i] += ALPHA*(-1)*dj;/*ìž„ê³„ì¹˜ í•™ìŠµ*/
 	}
 }
 
-/* getdata()ÇÔ¼ö
-ÇÐ½À µ¥ÀÌÅÍ ÀÐ±â*/
+/* getdata()í•¨ìˆ˜
+í•™ìŠµ ë°ì´í„° ì½ê¸°*/
 int getdata(char *argv[], double e[][INPUTNO + 3])
 {
-	int n_of_e = 0; // µ¥ÀÌÅÍ ¼¼Æ® °³¼ö
+	int n_of_e = 0; // ë°ì´í„° ì„¸íŠ¸ ê°œìˆ˜
 	int i, j = 0;
 	double ch;
 	FILE *fp1 = NULL;
@@ -138,11 +138,11 @@ int getdata(char *argv[], double e[][INPUTNO + 3])
 	fp1 = fopen(argv[1], "r");
 	//fp2 = fopen(argv[2], "w");
 	if (fp1 == NULL)
-		printf("Æ÷ÀÎÅÍ¹®Á¦");
+		printf("í¬ì¸í„°ë¬¸ì œ");
 	/*if (fp2 == NULL)
-		printf("Æ÷ÀÎÅÍ¹®Á¦");*/
-	/*µ¥ÀÌÅÍ ÀÔ·Â*/
-	printf("ÀÔ·Â½ÃÀÛ!");
+		printf("í¬ì¸í„°ë¬¸ì œ");*/
+	/*ë°ì´í„° ìž…ë ¥*/
+	printf("ìž…ë ¥ì‹œìž‘!");
 	for(i=0;i<75;i++) {
 		for (j = 0; j < 7; j++) {
 			fscanf(fp1, "%lf,", &e[i][j]);
@@ -154,51 +154,51 @@ int getdata(char *argv[], double e[][INPUTNO + 3])
 			fprintf(fp2, "%f ", e[i][j]);
 		fprintf(fp2, "\n");
 	}*/
-	printf("ÀÔ·Â³¡!");
+	printf("ìž…ë ¥ë!");
 	fclose(fp1);
 	//fclose(fp2);
 	return n_of_e;
 }
 
-/* olearn()ÇÔ¼ö
-Ãâ·ÂÃþ °¡ÁßÄ¡ ÇÐ½À*/
+/* olearn()í•¨ìˆ˜
+ì¶œë ¥ì¸µ ê°€ì¤‘ì¹˜ í•™ìŠµ*/
 void olearn(double wo[HIDDENNO + 1], double hi[], double e[INPUTNO + 1], double o, int output)
 {
 	int i;
 	double d;
 
-	d = (e[INPUTNO+output] - o)*o*(1 - o); //¿ÀÂ÷°è»ê
+	d = (e[INPUTNO+output] - o)*o*(1 - o); //ì˜¤ì°¨ê³„ì‚°
 	for (i = 0; i < HIDDENNO; ++i) {
-		wo[i] += ALPHA*hi[i] * d; //¿¬°á°­µµ ÇÐ½À
+		wo[i] += ALPHA*hi[i] * d; //ì—°ê²°ê°•ë„ í•™ìŠµ
 	}
-	wo[i] += ALPHA*(-1.0)*d; //ÀÓ°èÄ¡ ÇÐ½À
+	wo[i] += ALPHA*(-1.0)*d; //ìž„ê³„ì¹˜ í•™ìŠµ
 }
 
-/* forward()ÇÔ¼ö
-¼ø¹æÇâ°è»ê*/
+/* forward()í•¨ìˆ˜
+ìˆœë°©í–¥ê³„ì‚°*/
 double forward(double wh[HIDDENNO][INPUTNO], double wo[HIDDENNO + 1], double hi[], double e[INPUTNO + 1])
 {
 	int i, j;
-	double u; //°¡ÁßÇÕ°è»ê
-	double o; //Ãâ·Â°è»ê
+	double u; //ê°€ì¤‘í•©ê³„ì‚°
+	double o; //ì¶œë ¥ê³„ì‚°
 
-			  /*hi °è»ê*/
+			  /*hi ê³„ì‚°*/
 	for (i = 0; i < HIDDENNO; ++i) {
 		u = 0;
 		for (j = 0; j < INPUTNO; ++j)
-			u += e[j] * wh[i][j]; // °¡ÁßÇÕÀ» ±¸ÇÑ´Ù
-		u -= wh[i][j]; // ÀÓ°èÄ¡ Ã³¸®
+			u += e[j] * wh[i][j]; // ê°€ì¤‘í•©ì„ êµ¬í•œë‹¤
+		u -= wh[i][j]; // ìž„ê³„ì¹˜ ì²˜ë¦¬
 		hi[i] = s(u);
 	}
-	/*Ãâ·Â o°è»ê*/
+	/*ì¶œë ¥ oê³„ì‚°*/
 	o = 0;
 	for (i = 0; i < HIDDENNO; ++i)
 		o += hi[i] * wo[i];
-	o -= wo[i];//ÀÓ°èÄ¡ Ã³¸®
+	o -= wo[i];//ìž„ê³„ì¹˜ ì²˜ë¦¬
 	return s(o);
 }
 
-/*print ÇÔ¼ö °á°úÃâ·Â*/
+/*print í•¨ìˆ˜ ê²°ê³¼ì¶œë ¥*/
 void print(double wh[HIDDENNO][INPUTNO + 1], double wo1[HIDDENNO + 1], double wo2[HIDDENNO + 1], double wo3[HIDDENNO + 1])
 {
 	int i, j;
@@ -217,18 +217,18 @@ void print(double wh[HIDDENNO][INPUTNO + 1], double wo1[HIDDENNO + 1], double wo
 		printf("%lf", wo3[i]);
 	printf("\n");
 }
-/*initwh()ÇÔ¼ö
-Áß°£Ãþ °¡ÁßÄ¡ ÃÊ±âÈ­*/
+/*initwh()í•¨ìˆ˜
+ì¤‘ê°„ì¸µ ê°€ì¤‘ì¹˜ ì´ˆê¸°í™”*/
 void initwh(double wh[HIDDENNO][INPUTNO + 1])
 {
 	int i, j;
-	/*³­¼ö¿¡ ÀÇÇÑ ¿¬°á°­Á¶ °áÁ¤*/
+	/*ë‚œìˆ˜ì— ì˜í•œ ì—°ê²°ê°•ì¡° ê²°ì •*/
 	for (i = 0; i < HIDDENNO; ++i)
 		for (j = 0; j < INPUTNO + 1; ++j)
 			wh[i][j] = drnd();
 }
-/*initwo()ÇÔ¼ö
-Ãâ·ÂÃþ °¡ÁßÄ¡ ÃÊ±âÈ­*/
+/*initwo()í•¨ìˆ˜
+ì¶œë ¥ì¸µ ê°€ì¤‘ì¹˜ ì´ˆê¸°í™”*/
 void initwo(double wo[HIDDENNO + 1])
 {
 	int i;
@@ -236,17 +236,17 @@ void initwo(double wo[HIDDENNO + 1])
 	for (i = 0; i < HIDDENNO + 1; ++i)
 		wo[i] = drnd();
 }
-/*drnd() ÇÔ¼ö
-³­¼ö »ý¼º*/
+/*drnd() í•¨ìˆ˜
+ë‚œìˆ˜ ìƒì„±*/
 double drnd(void)
 {
-	double rndno;//»ý¼ºÇÑ ³­¼ö
+	double rndno;//ìƒì„±í•œ ë‚œìˆ˜
 
 	while ((rndno = (double)rand() / RAND_MAX) == 1.0);
-	rndno = rndno * 2 - 1; /*-1 ~ +1 »çÀÌ ³­¼ö »ý¼º*/
+	rndno = rndno * 2 - 1; /*-1 ~ +1 ì‚¬ì´ ë‚œìˆ˜ ìƒì„±*/
 	return rndno;
 }
-/*s()ÇÔ¼ö ½Ã±×¸ðÀÌµå ÇÔ¼ö*/
+/*s()í•¨ìˆ˜ ì‹œê·¸ëª¨ì´ë“œ í•¨ìˆ˜*/
 double s(double u)
 {
 	return 1.0 / (1.0 + exp(-u));
