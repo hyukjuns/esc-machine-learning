@@ -35,20 +35,20 @@ int main(int argc, char *argv[])
 	char flower3[] = "Iris-virginica";
 	
 	Info *test = (Info*)malloc(sizeof(Info)*TEST_SIZE);
-	if(test == NULL)	printf("TEST µ¿ÀûÇÒ´ç½ÇÆĞ!");
+	if(test == NULL)	printf("TEST ë™ì í• ë‹¹ì‹¤íŒ¨!");
 	Info *ref = (Info*)malloc(sizeof(Info)*REF_SIZE);
-	if(ref == NULL)		printf("REF µ¿ÀûÇÒ´ç½ÇÆĞ!");
+	if(ref == NULL)		printf("REF ë™ì í• ë‹¹ì‹¤íŒ¨!");
 	Dist *dist = (Dist*)malloc(sizeof(Dist)*REF_SIZE);
-	if(dist == NULL)	printf("DIST µ¿ÀûÇÒ´ç½ÇÆĞ!");
+	if(dist == NULL)	printf("DIST ë™ì í• ë‹¹ì‹¤íŒ¨!");
 	
 	fp1 = fopen(argv[1],"r");
-	if(fp1==NULL) printf("fp1 ¾È¿­¸²");
+	if(fp1==NULL) printf("fp1 ì•ˆì—´ë¦¼");
 	else printf("good \n");
 	fp2 = fopen(argv[2],"r");
-	if(fp2==NULL) printf("fp2 ¾È¿­¸²");
+	if(fp2==NULL) printf("fp2 ì•ˆì—´ë¦¼");
 	else printf("good \n\n");
 	fp3 = fopen(argv[3],"w");
-	if(fp3==NULL) printf("fp3 ¾È¿­¸²");
+	if(fp3==NULL) printf("fp3 ì•ˆì—´ë¦¼");
 	else printf("good");
 
 	for(i=0; i<TEST_SIZE; i++)
@@ -60,9 +60,9 @@ int main(int argc, char *argv[])
 
 	for(i=0; i<TEST_SIZE; i++)
 	{
-		printf("%d ¹øÂ° ²É \n", i+1);
+		printf("%d ë²ˆì§¸ ê½ƒ \n", i+1);
 		double sum = 0;
-		for(j=0; j<REF_SIZE; j++)// testÀÎÇ² 1°³·Î ref 90°³¿Í °Å¸®ºñ±³ 
+		for(j=0; j<REF_SIZE; j++)// testì¸í’‹ 1ê°œë¡œ ref 90ê°œì™€ ê±°ë¦¬ë¹„êµ 
 		{
 			sum = pow(ref[j].pos1-test[i].pos1,2) + pow(ref[j].pos2-test[i].pos2,2) + pow(ref[j].pos3-test[i].pos3,2) + pow(ref[j].pos4-test[i].pos4,2); 
 			dist[j].distance = sqrt(sum);
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 		}
 		qsort(dist,REF_SIZE,sizeof(Dist),comp);
 		int cnt1=0, cnt2=0, cnt3=0;
-		for(h=0; h<k; h++) //Á¤·ÄµÈ°Å¸®¿¡¼­ °¡Àå°¡±î¿î k°³¸¸Å­ »ÌÀºÈÄ Å¬·¡½ºÁ¤º¸ºñ±³ 
+		for(h=0; h<k; h++) //ì •ë ¬ëœê±°ë¦¬ì—ì„œ ê°€ì¥ê°€ê¹Œìš´ kê°œë§Œí¼ ë½‘ì€í›„ í´ë˜ìŠ¤ì •ë³´ë¹„êµ 
 		{	
 			if(!strcmp(flower1,dist[h].classInfo))	cnt1++;
 			else if(!strcmp(flower2,dist[h].classInfo))	cnt2++;
@@ -79,27 +79,27 @@ int main(int argc, char *argv[])
 		}
 			if(cnt1>=cnt2 && cnt1>=cnt3)
 			{
-				printf("ºĞ·ù°á°ú : %s \n", flower1 );
+				printf("ë¶„ë¥˜ê²°ê³¼ : %s \n", flower1 );
 				if(!strcmp(flower1, test[i].classy))
 					correct1++;
 			}
 			else if(cnt2>=cnt1 && cnt2>=cnt3)
 			{
-				printf("ºĞ·ù°á°ú : %s \n", flower2 );
+				printf("ë¶„ë¥˜ê²°ê³¼ : %s \n", flower2 );
 				if(!strcmp(flower2, test[i].classy))
 					correct2++;
 			}
 			else if(cnt3>=cnt1 && cnt3>=cnt1)
 			{
-				printf("ºĞ·ù°á°ú :  %s \n", flower3 );
+				printf("ë¶„ë¥˜ê²°ê³¼ :  %s \n", flower3 );
 				if(!strcmp(flower3, test[i].classy))
 					correct3++;
 			}
 	}	
 	
-	printf("Iris-setosa Á¤È®µµ : %fÆÛ¼¾Æ® \n", ((double)correct1/(TEST_SIZE/3))*100);
-	printf("Iris-versicolor Á¤È®µµ : %fÆÛ¼¾Æ® \n", ((double)correct2/(TEST_SIZE/3))*100);
-	printf("Iris-virginica Á¤È®µµ : %fÆÛ¼¾Æ® \n", ((double)correct3/(TEST_SIZE/3))*100);
+	printf("Iris-setosa ì •í™•ë„ : %fí¼ì„¼íŠ¸ \n", ((double)correct1/(TEST_SIZE/3))*100);
+	printf("Iris-versicolor ì •í™•ë„ : %fí¼ì„¼íŠ¸ \n", ((double)correct2/(TEST_SIZE/3))*100);
+	printf("Iris-virginica ì •í™•ë„ : %fí¼ì„¼íŠ¸ \n", ((double)correct3/(TEST_SIZE/3))*100);
 	
 	fclose(fp3);
 	free(test);
