@@ -1,4 +1,4 @@
-// Pthread_KNN ¾²·¹µå 4°³»ç¿ë(dist 4°³·Î ºÐÇÒ)+SIMD
+// Pthread_KNN ì“°ë ˆë“œ 4ê°œì‚¬ìš©(dist 4ê°œë¡œ ë¶„í• )+SIMD
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 	thr_id = pthread_join(thread[2], NULL);
 	thr_id = pthread_join(thread[3], NULL);
 	end = clock();
-	printf("°É¸°½Ã°£ %f s", (double)(end - start) / CLOCKS_PER_SEC);
+	printf("ê±¸ë¦°ì‹œê°„ %f s", (double)(end - start) / CLOCKS_PER_SEC);
 	_aligned_free(test);
 	_aligned_free(ref);
 	free(dist1);
