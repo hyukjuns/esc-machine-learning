@@ -1,5 +1,5 @@
 /*k_means clustering
- cmdâ�� ���α׷��� ���ϸ�*/
+ cmd창에 프로그램명 파일명*/
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	FILE *fp1 = fopen(argv[1], "r");
 
 	Info *info = (Info*)malloc(sizeof(Info)*SIZE);
-	Info *cluster1 = (Info*)malloc(sizeof(Info)*SIZE); //����3������
+	Info *cluster1 = (Info*)malloc(sizeof(Info)*SIZE); //군집3개생성
 	Info *cluster2 = (Info*)malloc(sizeof(Info)*SIZE);
 	Info *cluster3 = (Info*)malloc(sizeof(Info)*SIZE);
 	Info centroid[3] = { 0 };
@@ -50,45 +50,45 @@ int main(int argc, char *argv[])
 	{
 		j = rand() % 50 + (i * 50);
 		centroid[i] = info[j];
-		printf("�ʱ� centroid%d �ּ� : %d \n", i + 1, j);
-		printf("�ʱ� centroid%d = %f %f %f %f %s \n", i + 1, centroid[i].pos1, centroid[i].pos2, centroid[i].pos3, centroid[i].pos4, centroid[i].lable);
+		printf("초기 centroid%d 주소 : %d \n", i + 1, j);
+		printf("초기 centroid%d = %f %f %f %f %s \n", i + 1, centroid[i].pos1, centroid[i].pos2, centroid[i].pos3, centroid[i].pos4, centroid[i].lable);
 	}
 	while (repeat <20)
 	{
-		printf("%d��° ���� �������� => \n", repeat + 1);;
+		printf("%d번째 군집 형성시작 => \n", repeat + 1);;
 		cnt1 = 0, cnt2 = 0, cnt3 = 0;
-		for (i = 0; i < SIZE; i++) //info 0~149 ����
+		for (i = 0; i < SIZE; i++) //info 0~149 가지
 		{
 			double sum[K] = { 0 };
-			for (j = 0; j < K; j++) //3���� �߽ɰ� ����
+			for (j = 0; j < K; j++) //3개의 중심과 비교
 			{
 				sum[j] = pow(centroid[j].pos1 - info[i].pos1, 2) + pow(centroid[j].pos2 - info[i].pos2, 2) + pow(centroid[j].pos3 - info[i].pos3, 2) + pow(centroid[j].pos4 - info[i].pos4, 2);
 				dist[j].distInfo = sum[j];
-				strcpy(dist[j].lableInfo, centroid[j].lable); //�� �߽ɰ��� �Ÿ��� �߽��� ������ dist�迭�� ����
+				strcpy(dist[j].lableInfo, centroid[j].lable); //각 중심과의 거리와 중심의 정보를 dist배열에 저장
 			}
-			qsort(dist, K, sizeof(Dist), comp);//3���� �߽ɰ��� �Ÿ��� ���� ������ �Ÿ� ����
-			if (!strcmp(centroid[0].lable, dist[0].lableInfo))//ù��°��������
+			qsort(dist, K, sizeof(Dist), comp);//3개의 중심과의 거리중 가장 가까운 거리 산출
+			if (!strcmp(centroid[0].lable, dist[0].lableInfo))//첫번째군집생성
 			{
 				cluster1[cnt1] = info[i];
 				cnt1++;
 			}
-			else if (!strcmp(centroid[1].lable, dist[0].lableInfo))//�ι�°��������
+			else if (!strcmp(centroid[1].lable, dist[0].lableInfo))//두번째군집생성
 			{
 				cluster2[cnt2] = info[i];
 				cnt2++;
 			}
-			else if (!strcmp(centroid[2].lable, dist[0].lableInfo))//����°��������
+			else if (!strcmp(centroid[2].lable, dist[0].lableInfo))//세번째군집생성
 			{
 				cluster3[cnt3] = info[i];
 				cnt3++;
 			}
 		}
-		printf("=> %d ��° ù��°���� %d �ι�°���� %d ����°���� %d \n ", repeat + 1, cnt1, cnt2, cnt3);
+		printf("=> %d 번째 첫번째군집 %d 두번째군집 %d 세번째군집 %d \n ", repeat + 1, cnt1, cnt2, cnt3);
 		printf("--------------------------------------------------\n");
 		if (oldcnt1 == cnt1&&oldcnt2 == cnt2&&oldcnt3 == cnt3)
 		{
 			int hcnt1 = 0, hcnt2 = 0, hcnt3 = 0;
-			printf("������ȭ����--->����\n");
+			printf("군집변화없음--->종료\n");
 			for (i = 0; i < cnt1; i++)
 			{
 				if (!strcmp(cluster1[i].lable, flower1))	hcnt1++;
@@ -101,11 +101,11 @@ int main(int argc, char *argv[])
 			{
 				if (!strcmp(cluster3[i].lable, flower3))	hcnt3++;
 			}
-			printf("Ȯ��: ù��°���� = %f, �ι�°���� = %f, ����°���� = %f \n", (((double)hcnt1 / 50)*100.0), (((double)hcnt2 / 50)*100.0), (((double)hcnt3 / 50)*100.0));
+			printf("확률: 첫번째군집 = %f, 두번째군집 = %f, 세번째군집 = %f \n", (((double)hcnt1 / 50)*100.0), (((double)hcnt2 / 50)*100.0), (((double)hcnt3 / 50)*100.0));
 			break;
 		}
-		//���ο��߽�ã������
-		printf("---���ο� �߽� ã�� ����---\n");
+		//새로운중심찾기시작
+		printf("---새로운 중심 찾기 시작---\n");
 		for (i = 0; i < cnt1; i++)
 		{
 			cluster1[i].distance = 0;
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 			newsum[j] = pow(npos1 - cluster1[j].pos1, 2) + pow(npos2 - cluster1[j].pos2, 2) + pow(npos3 - cluster1[j].pos3, 2) + pow(npos4 - cluster1[j].pos4, 2);
 			cluster1[j].distance = newsum[j];
 		}
-		qsort(cluster1, cnt1, sizeof(Info), comp2);//���ο��߽ɰ��� �Ÿ��� ���� ������ �Ÿ����� ����
+		qsort(cluster1, cnt1, sizeof(Info), comp2);//새로운중심과의 거리중 가장 가까운 거리정보 산출
 		centroid[0].pos1 = cluster1[0].pos1;
 		centroid[0].pos2 = cluster1[0].pos2;
 		centroid[0].pos3 = cluster1[0].pos3;
@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
 			newsum2[j] = pow(npos1 - cluster2[j].pos1, 2) + pow(npos2 - cluster2[j].pos2, 2) + pow(npos3 - cluster2[j].pos3, 2) + pow(npos4 - cluster2[j].pos4, 2);
 			cluster2[j].distance = newsum2[j];
 		}
-		qsort(cluster2, cnt2, sizeof(Info), comp2); //���ο��߽ɰ��� �Ÿ��� ���� ������ �Ÿ����� ����
+		qsort(cluster2, cnt2, sizeof(Info), comp2); //새로운중심과의 거리중 가장 가까운 거리정보 산출
 		centroid[1].pos1 = cluster2[0].pos1;
 		centroid[1].pos2 = cluster2[0].pos2;
 		centroid[1].pos3 = cluster2[0].pos3;
@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
 			newsum3[j] = pow(npos1 - cluster3[j].pos1, 2) + pow(npos2 - cluster3[j].pos2, 2) + pow(npos3 - cluster3[j].pos3, 2) + pow(npos4 - cluster3[j].pos4, 2);
 			cluster3[j].distance = newsum3[j];
 		}
-		qsort(cluster3, cnt3, sizeof(Info), comp2); //���ο��߽ɰ��� �Ÿ��� ���� ������ �Ÿ����� �����ؼ� ���ο��߽�����ǥ ����
+		qsort(cluster3, cnt3, sizeof(Info), comp2); //새로운중심과의 거리중 가장 가까운 거리정보 산출해서 새로운중심점좌표 선정
 		centroid[2].pos1 = cluster3[0].pos1;
 		centroid[2].pos2 = cluster3[0].pos2;
 		centroid[2].pos3 = cluster3[0].pos3;
@@ -196,10 +196,10 @@ int main(int argc, char *argv[])
 		strcpy(centroid[2].lable, cluster3[0].lable);
 		printf("new centroid3 : %f , %f , %f , %f , %s \n", centroid[2].pos1, centroid[2].pos2, centroid[2].pos3, centroid[2].pos4, centroid[2].lable);
 		npos1 = 0, npos2 = 0, npos3 = 0, npos4 = 0;
-		printf("---���ο� �߽� ã�� ��---\n");
+		printf("---새로운 중심 찾기 끝---\n");
 		oldcnt1 = cnt1, oldcnt2 = cnt2, oldcnt3 = cnt3;
-		//���ο��߽����ⳡ
-		repeat++;//�ݺ�
+		//새로운중심잡기끝
+		repeat++;//반복
 	}
 	free(info);
 	free(cluster1);
